@@ -182,6 +182,8 @@ const DeliveryRegister = () => {
             <UserCard
               key={index}
               id={user._id}
+              regNo={user.regNo}
+              mobile={user.mobile}
               firstname={user.firstname}
               lastname={user.lastname}
               username={user.username}
