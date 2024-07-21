@@ -5,11 +5,12 @@ import UserDetails from "./UserDetails";
 import RegisterStep2 from "./RegisterStep2";
 import RegisterStap1 from "./RegisterStap1";
 
-const AdminRegister = () => {
+const HelpRegister = () => {
   const [usersData, setUsers] = useState([]);
   const [isId, setIsId] = useState();
   const [isData, setIsData] = useState([]);
   const [isView, setIsView] = useState(false);
+
   const handelToggle = (toggles, id) => {
     setIsView(toggles);
     setIsId(id);
@@ -18,10 +19,11 @@ const AdminRegister = () => {
   useEffect(() => {
     fetchUsers();
   }, []);
+
   const fetchUsers = async () => {
     try {
       const response = await fetch(
-        "https://e-commerce-nu-seven.vercel.app/api/admin/users"
+        "https://e-commerce-nu-seven.vercel.app/api/helpdesk/users"
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -29,9 +31,11 @@ const AdminRegister = () => {
       const data = await response.json();
       setUsers(data);
     } catch (error) {
-      console.loh(error);
+      console.log(error);
     }
   };
+
+  const [errors, setErrors] = useState({});
   const [userRegNo, setUserRegNo] = useState();
   const [data, setData] = useState({
     email: "",
@@ -39,11 +43,13 @@ const AdminRegister = () => {
     mobile: "",
     panNumber: "",
   });
+
   const handelSubmit = async (e) => {
-    e.preventDefault(e);
+    e.preventDefault();
+    setErrors({});
     try {
       const res = await fetch(
-        `https://e-commerce-nu-seven.vercel.app/api/admin/register`,
+        `https://e-commerce-nu-seven.vercel.app/api/helpdesk/register`,
         {
           method: "POST",
           headers: {
@@ -52,14 +58,20 @@ const AdminRegister = () => {
           body: JSON.stringify({ ...data }),
         }
       );
-      const adminData = await res.json();
-      setUserRegNo(adminData);
+      const helpData = await res.json();
+      setUserRegNo(helpData);
       setIsView(false);
       handelToggle("registerStep1");
     } catch (error) {
-      console.log(error);
+       if (error.response && error.response.status === 409) {
+         const { field, message } = error.response.data;
+         setErrors((prevErrors) => ({ ...prevErrors, [field]: message }));
+       } else {
+         setErrors({ general: "An unexpected error occurred." });
+       }
     }
   };
+
   const [step2, setStep2] = useState({
     firstname: "",
     lastname: "",
@@ -79,11 +91,12 @@ const AdminRegister = () => {
     state_id: "",
     district_id: "",
   });
+
   const handelSubmitStep2 = async (e) => {
-    e.preventDefault(e);
+    e.preventDefault();
     try {
       const res = await fetch(
-        `https://e-commerce-nu-seven.vercel.app/api/admin/register/${userRegNo}`,
+        `https://e-commerce-nu-seven.vercel.app/api/helpdesk/register/${userRegNo}`,
         {
           method: "PUT",
           headers: {
@@ -92,17 +105,18 @@ const AdminRegister = () => {
           body: JSON.stringify({ ...step2 }),
         }
       );
-       await res.json();
+      await res.json();
       fetchUsers();
       setIsView(false);
     } catch (error) {
       console.log(error);
     }
   };
+
   const handelDelete = async (id) => {
     try {
       const res = await fetch(
-        `https://e-commerce-nu-seven.vercel.app/api/admin/delete/${id}`,
+        `https://e-commerce-nu-seven.vercel.app/api/helpdesk/delete/${id}`,
         {
           method: "DELETE",
         }
@@ -121,7 +135,7 @@ const AdminRegister = () => {
       const fetchOneUsers = async () => {
         try {
           const response = await fetch(
-            `https://e-commerce-nu-seven.vercel.app/api/admin/boy/${isId}`
+            `https://e-commerce-nu-seven.vercel.app/api/helpdesk/boy/${isId}`
           );
           if (!response.ok) {
             throw new Error("Network response was not ok");
@@ -140,7 +154,7 @@ const AdminRegister = () => {
   return (
     <div className="flex h-screen flex-col items-start">
       <div className="p-2 bg-yellow-300 flex flex-row w-full items-center justify-between">
-        <h1>Add Admins</h1>
+        <h1>Add Helpdesk</h1>
         {isView ? (
           <button
             onClick={() => setIsView(false)}
@@ -162,6 +176,7 @@ const AdminRegister = () => {
           handelSubmit={handelSubmit}
           data={data}
           setData={setData}
+          errors={errors}
         />
       )}
       {isView === "registerStep1" && (
@@ -214,10 +229,9 @@ const AdminRegister = () => {
             permamentAddress={isData.permamentAddress}
             pin={isData.pin}
             qulification={isData.qulification}
-            state_name={isData.state_name}
-            district_name={isData.district_name}
+            state_id={isData.state_id}
+            district_id={isData.district_id}
             lastname={isData.lastname}
-            passwords={isData.passwords}
           />
         </div>
       )}
@@ -225,4 +239,4 @@ const AdminRegister = () => {
   );
 };
 
-export default AdminRegister;
+export default HelpRegister;

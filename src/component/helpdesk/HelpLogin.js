@@ -4,7 +4,7 @@ import Button from "../Button";
 import { useNavigate } from "react-router-dom";
 import { RxCross1 } from "react-icons/rx";
 
-const AdminLogin = ({ setIsToggle, handelToggle }) => {
+const HelpLogin = ({ setIsToggle, handelToggle }) => {
   const [regNo, setRegNo] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -19,7 +19,7 @@ const AdminLogin = ({ setIsToggle, handelToggle }) => {
 
     try {
       const response = await fetch(
-        "https://e-commerce-nu-seven.vercel.app/api/admin/login",
+        "https://e-commerce-nu-seven.vercel.app/api/helpdesk/login",
         {
           method: "POST",
           headers: {
@@ -38,8 +38,8 @@ const AdminLogin = ({ setIsToggle, handelToggle }) => {
         localStorage.setItem("token", data.token);
         setTimeout(() => {
           setShowMessage(false);
-          navigate("/admin");
-        }, 1000);
+          navigate("/helpdesk");
+        }, 3000);
       } else {
         setMessage(data.message || "Login failed");
         setShowMessage(true);
@@ -47,14 +47,14 @@ const AdminLogin = ({ setIsToggle, handelToggle }) => {
       // Hide...
       setTimeout(() => {
         setShowMessage(false);
-      }, 1000);
+      }, 3000);
     } catch (error) {
       setMessage("An error occurred during login.", error);
       setShowMessage(true);
       // Hide...
       setTimeout(() => {
         setShowMessage(false);
-      }, 1000);
+      }, 3000);
     }
   };
   return (
@@ -70,7 +70,7 @@ const AdminLogin = ({ setIsToggle, handelToggle }) => {
       <div className="border rounded shadow-2xl bg-white text-white w-[600px] flex flex-col items-center">
         <div className="bg-blue-500 w-full p-3 flex flex-row items-center justify-between">
           <h2 className="text-md font-semibold uppercase">
-            Admin Portal Login
+            Help Desk Portal Login
           </h2>
           <button onClick={() => setIsToggle(false)}>
             <RxCross1 />
@@ -101,7 +101,7 @@ const AdminLogin = ({ setIsToggle, handelToggle }) => {
           <div className="text-end w-full py-3">
             <button
               className="text-blue-700"
-              onClick={() => handelToggle("admin")}
+              onClick={() => handelToggle("helpdesk")}
             >
               Forget Password
             </button>
@@ -121,4 +121,4 @@ const AdminLogin = ({ setIsToggle, handelToggle }) => {
   );
 };
 
-export default AdminLogin;
+export default HelpLogin;

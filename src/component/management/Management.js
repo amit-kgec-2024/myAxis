@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import DeliveryRegister from './DeliveryRegister';
 import AdminRegister from './AdminRegister';
 import { useNavigate } from 'react-router-dom';
+import HelpRegister from './HelpRegister';
 
 const Management = () => {
   const [isManagement, setIsManagement] = useState("admin");
@@ -54,9 +55,10 @@ const Management = () => {
             Help
           </button>
         </div>
-        <div className="w-full p-5">
+        <div className="w-full p-5 overflow-scroll">
           {isManagement === "admin" && <AdminRegister />}
           {isManagement === "delivery" && <DeliveryRegister />}
+          {isManagement === "help" && <HelpRegister />}
         </div>
       </div>
     </div>
