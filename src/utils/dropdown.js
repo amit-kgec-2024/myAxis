@@ -116,3 +116,6 @@ export const optionCategoryGrocery = [
   { label: "Dairy & Eggs", value: "Dairy & Eggs" },
   { label: "Home & Kitchen", value: "Home & Kitchen" },
 ];
+
+export const salutionData = ["Mr.", "Mrs.", "Ms.", "Miss.", "Dr."];
+export const gstTypeData = ["Registered", "Composite", "Un-registered"];

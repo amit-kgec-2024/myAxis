@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import AdminMobil from "./AdminMobil";
-import AdminAppliances from "./AdminAppliances";
-import AdminElectronics from "./AdminElectronics";
-import AdminFashion from "./AdminFashion";
-import AdminBeauty from "./AdminBeauty";
-import AdminKitchen from "./AdminKitchen";
-import AdminFurniture from "./AdminFurniture";
-import AdminGrocery from "./AdminGrocery";
+import AdminMobil from "./products/AdminMobil";
+import AdminAppliances from "./products/AdminAppliances";
+import AdminElectronics from "./products/AdminElectronics";
+import AdminFashion from "./products/AdminFashion";
+import AdminBeauty from "./products/AdminBeauty";
+import AdminKitchen from "./products/AdminKitchen";
+import AdminFurniture from "./products/AdminFurniture";
+import AdminGrocery from "./products/AdminGrocery";
 import { useNavigate } from "react-router-dom";
+import Layout from "../layout/Layout";
 
 const Admin = () => {
   const [isAdmin, setIsAdmin] = useState("mobile");
@@ -22,7 +23,7 @@ const Admin = () => {
     navigate("/");
   };
   return (
-    <div className="bg-teal-50 flex flex-row w-full">
+    <Layout className="bg-teal-50 flex flex-row w-full">
       <div className="flex flex-col items-start justify-stretch px-4 py-1 text-2xl font-semibold w-[15%] bg-cyan-100 gap-4 min-h-screen shadow">
         <button
           onClick={() => logOut()}
@@ -101,7 +102,7 @@ const Admin = () => {
         {isAdmin === "furniture" && <AdminFurniture />}
         {isAdmin === "grocery" && <AdminGrocery />}
       </div>
-    </div>
+    </Layout>
   );
 };
 
