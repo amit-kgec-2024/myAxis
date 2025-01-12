@@ -11,7 +11,6 @@ import H2 from "../../component/tag/H2";
 import Dropdown from "../../component/tag/Dropdown";
 import { gstTypeData, salutionData } from "../../utils/dropdown";
 import GstDropdown from "../../component/tag/GstDropdown";
-import AddButton from "../../component/button/AddButton";
 import { toast } from "react-toastify";
 
 const SellerView = () => {
@@ -19,6 +18,8 @@ const SellerView = () => {
   const [sellerId, setSellerId] = useState("");
   const [isActive, setIsActive] = useState(null);
   const [sellerData, setSellerData] = useState(null);
+  console.log(sellerData);
+
   const [isImage, setImages] = useState("");
   const [password, setPassword] = useState("");
   const [selected, setSelected] = useState("");
@@ -49,8 +50,10 @@ const SellerView = () => {
   const [gstImage, setGstImage] = useState("");
   const [contacts, setContacts] = useState([]);
   const [bankDetails, setBankDetails] = useState([]);
-
   const [sameAsBilling, setSameAsBilling] = useState(false);
+
+  const userType = sessionStorage.getItem("userType");
+
   const fetchState = async () => {
     try {
       const response = await fetch(environment.apiUrl + "state/list");
@@ -73,7 +76,7 @@ const SellerView = () => {
     } else {
       fetchSellerData(sellerId);
     }
-  }, []);
+  }, [navigate]);
 
   const fetchSellerData = async (sellerId) => {
     try {
@@ -212,7 +215,11 @@ const SellerView = () => {
   return (
     <Layout>
       <Container>
-        <div className="flex flex-row items-center gap-4 justify-end px-2 md:px-5 py-3">
+        <div
+          className={`${
+            userType === "Admin" ? "flex" : "hidden"
+          } flex-row items-center gap-4 justify-end px-2 md:px-5 py-3`}
+        >
           <button
             onClick={(e) => handelStatus(e)}
             className={`px-6 py-2 text-white ${

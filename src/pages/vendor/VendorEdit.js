@@ -73,7 +73,7 @@ const VendorEdit = () => {
     } else {
       fetchVendorData(vendorId);
     }
-  }, []);
+  }, [navigate]);
 
   const fetchVendorData = async (vendorId) => {
     try {

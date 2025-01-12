@@ -7,14 +7,14 @@ import { environment } from "../../enviroment/enviroment";
 import { toast } from "react-toastify";
 
 const DeliveryLogin = ({ setIsToggle, handelToggle }) => {
-  const [regNo, setRegNo] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const payload = { regNo, password };
+    const payload = { email, password };
 
     try {
       const response = await fetch(environment.apiUrl + "delivery/login", {
@@ -29,9 +29,11 @@ const DeliveryLogin = ({ setIsToggle, handelToggle }) => {
 
       if (response.ok) {
         toast.success("Login successful!");
+        toast.success("Login successful!");
         localStorage.setItem("token", data.token);
         localStorage.setItem("userType", data.user.userType);
-        sessionStorage.setItem("deliveryId", data.user?.deliveryId);
+        localStorage.setItem("details", data.user);
+        sessionStorage.setItem("deliveryPartnerId", data.user?.deliveryId);
         navigate("/delivery-dashboard");
       } else {
         toast.error(data.message || "Login failed");
@@ -56,12 +58,12 @@ const DeliveryLogin = ({ setIsToggle, handelToggle }) => {
           onSubmit={(e) => handleSubmit(e)}
         >
           <Input
-            type="text"
-            label="REG NO"
-            placeholder="Register Number.."
+            type="email"
+            label="Email"
+            placeholder="Email.."
             className="text-slate-700"
-            value={regNo}
-            onChange={(e) => setRegNo(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
           <Input

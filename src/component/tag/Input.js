@@ -9,6 +9,7 @@ const Input = ({
   value = "",
   onChange = () => {},
   className = "",
+  className2 = "",
   readOnly = false,
 }) => {
   const [isData, setIsData] = useState("");
@@ -17,7 +18,7 @@ const Input = ({
     setIsData(e.target.value);
   };
   return (
-    <div className="flex flex-col gap-1 mb-4">
+    <div className={`flex flex-col gap-1 mb-4 ${className2}`}>
       {label && (
         <label htmlFor={id} className="font-semibold text-gray-700">
           {label}

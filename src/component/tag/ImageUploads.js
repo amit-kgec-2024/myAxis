@@ -4,6 +4,8 @@ const ImageUploads = ({ value, onChange, redOnly = false }) => {
   const [base64Image, setBase64Image] = useState(value || "");
   const [imageSizeMessage, setImageSizeMessage] = useState("");
   const [currentImageSize, setCurrentImageSize] = useState(0);
+  console.log(currentImageSize);
+
   const [messageColor, setMessageColor] = useState("green");
 
   useEffect(() => {

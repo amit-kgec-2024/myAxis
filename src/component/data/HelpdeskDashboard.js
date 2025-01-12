@@ -1,24 +1,49 @@
+import { FaUserAlt } from "react-icons/fa";
+
 export const helpdesk = [
   { type: "label", label: "Help Desk" },
-  { name: "Dashboard", path: "/helpdesk-dashboard" },
+  { name: "Dashboard", icon: <FaUserAlt />, path: "/helpdesk-dashboard" },
   {
-    name: "Enquiry",
-    path: "/enquiry",
+    name: "Profile",
+    icon: <FaUserAlt />,
+    path: "/helpdesk-view",
   },
   {
-    name: "Financial Consultant",
-    // icon: duotone.UserProfile,
-    path: "/financialConsultant",
+    name: "Products",
+    icon: <FaUserAlt />,
+    path: "#",
+    children: [
+      { name: "Mobiles", path: "/seller/mobile" },
+      { name: "Appliances", path: "/seller/appliances" },
+      { name: "Electronics", path: "/seller/electronics" },
+      { name: "Fashions", path: "/seller/fashion" },
+      { name: "Beauty", path: "/seller/beauty" },
+      { name: "KItchen", path: "/seller/kitchen" },
+      { name: "Furniture", path: "/seller/furniture" },
+      { name: "Grocery", path: "/seller/grocery" },
+    ],
   },
   {
-    name: "Lending Partners",
-    // icon: duotone.UserProfile,
+    name: "Customers",
+    icon: <FaUserAlt />,
+    path: "#",
     children: [
       {
         name: "Partner Category",
-        path: "/partners/partnerCategory/categoryList",
+        path: "#",
       },
-      { name: "Partner", path: "/partners/partner/partnerList" },
+      { name: "Partner", path: "#" },
+    ],
+  },
+  {
+    name: "Products",
+    icon: <FaUserAlt />,
+    children: [
+      {
+        name: "Partner Category",
+        path: "#",
+      },
+      { name: "Partner", path: "#" },
     ],
   },
 ];

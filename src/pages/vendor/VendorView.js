@@ -18,6 +18,7 @@ const VendorView = () => {
   const [vendorId, setVendorId] = useState("");
   const [isActive, setIsActive] = useState(null);
   const [vendorData, setVendorData] = useState(null);
+  console.log("----->", vendorData);
   const [isImage, setImages] = useState("");
   const [password, setPassword] = useState("");
   const [selected, setSelected] = useState("");
@@ -50,6 +51,9 @@ const VendorView = () => {
   const [bankDetails, setBankDetails] = useState([]);
 
   const [sameAsBilling, setSameAsBilling] = useState(false);
+
+  const userType = sessionStorage.getItem("userType");
+
   const fetchState = async () => {
     try {
       const response = await fetch(environment.apiUrl + "state/list");
@@ -72,7 +76,7 @@ const VendorView = () => {
     } else {
       fetchVendorData(vendorId);
     }
-  }, []);
+  }, [navigate]);
 
   const fetchVendorData = async (vendorId) => {
     try {
@@ -211,7 +215,11 @@ const VendorView = () => {
   return (
     <Layout>
       <Container>
-        <div className="flex flex-row items-center gap-4 justify-end px-2 md:px-5 py-3">
+        <div
+          className={`${
+            userType === "Admin" ? "flex" : "hidden"
+          } flex-row items-center gap-4 justify-end px-2 md:px-5 py-3`}
+        >
           <button
             onClick={(e) => handelStatus(e)}
             className={`px-6 py-2 text-white ${

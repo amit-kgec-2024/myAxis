@@ -5,7 +5,7 @@ import { seller } from "../data/SellersDashboard";
 import { delivery } from "../data/DeliveryDashboard";
 import { vendor } from "../data/VendorDashboard";
 import { helpdesk } from "../data/HelpdeskDashboard";
-import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import { FaChevronDown, FaChevronRight } from "react-icons/fa";
 import { TbCircleDotFilled } from "react-icons/tb";
 
 const Dashboard = () => {
@@ -25,6 +25,7 @@ const Dashboard = () => {
     return false;
   };
   const isChildActive = (path) => location.pathname === path;
+
   const renderLavels = (data) => {
     const handleNavigation = (path) => {
       if (path) {
@@ -35,15 +36,19 @@ const Dashboard = () => {
     return data.map((ele, index) => {
       if (ele.name) {
         const isActive = isActivePath(ele.path, ele.children);
+        const isAnyChildActive = ele.children?.some((child) =>
+          isChildActive(child.path)
+        );
+
         return (
-          <div key={index} className="flex flex-col my-3">
+          <div key={index} className="flex flex-col my-3 px-2">
             <button
               onClick={() => {
                 handleNavigation(ele.path);
                 if (ele.children) handleExpandClick(index);
               }}
               className={`flex items-center justify-between w-full px-5 py-2 text-lg rounded-md ${
-                isActive
+                isActive || isAnyChildActive
                   ? "bg-red-500 text-white font-bold"
                   : "hover:bg-slate-100"
               }`}
@@ -54,8 +59,8 @@ const Dashboard = () => {
               </span>
               {ele.children ? (
                 <span>
-                  {expandedIndex === index ? (
-                    <FaChevronUp />
+                  {expandedIndex === index || isAnyChildActive ? (
+                    <FaChevronRight />
                   ) : (
                     <FaChevronDown />
                   )}
@@ -64,7 +69,7 @@ const Dashboard = () => {
                 <span></span>
               )}
             </button>
-            {expandedIndex === index && ele.children && (
+            {(expandedIndex === index || isAnyChildActive) && ele.children && (
               <div className="ml-4">
                 {ele.children.map((exe, childIndex) => {
                   const isActiveChild = isChildActive(exe.path);
@@ -72,11 +77,13 @@ const Dashboard = () => {
                     <button
                       key={childIndex}
                       onClick={() => handleNavigation(exe.path)}
-                      className={`flex items-center gap-3 w-full px-4 py-2 rounded-md hover:bg-slate-100 ${
-                        isActiveChild ? "font-bold" : ""
+                      className={`flex items-center gap-3 w-full px-4 my-2 py-2 rounded-md hover:bg-slate-100 ${
+                        isActiveChild ? "font-bold bg-slate-100" : ""
                       }`}
                     >
-                      <span>
+                      <span
+                        className={`${isActiveChild ? "text-red-500" : ""}`}
+                      >
                         <TbCircleDotFilled />
                       </span>
                       <span>{exe.name}</span>
@@ -88,7 +95,7 @@ const Dashboard = () => {
           </div>
         );
       }
-      return null; // Return null when ele.name is falsy
+      return null;
     });
   };
 
@@ -102,10 +109,10 @@ const Dashboard = () => {
         <div>{renderLavels(admin)}</div>
       ) : USERTYPE === "Seller" ? (
         <div>{renderLavels(seller)}</div>
-      ) : USERTYPE === "Delivery Partners" ? (
-        <div>{renderLavels(helpdesk)}</div>
-      ) : USERTYPE === "Help Desk" ? (
+      ) : USERTYPE === "Delivery" ? (
         <div>{renderLavels(delivery)}</div>
+      ) : USERTYPE === "Helpdesk" ? (
+        <div>{renderLavels(helpdesk)}</div>
       ) : USERTYPE === "Vendor" ? (
         <div>{renderLavels(vendor)}</div>
       ) : (
@@ -118,7 +125,7 @@ const Dashboard = () => {
       <div className="flex justify-center items-center h-[10%]">
         <img src="/logofull.png" alt="IndMart" style={{ width: "9rem" }} />
       </div>
-      <div className="overflow-auto h-[85%] scrollbar-thin scrollbar-thumb-blue-500 scrollbar-track-gray-200">
+      <div className="overflow-auto h-[85%] scrollbar-thin scrollbar-thumb-teal-950 scrollbar-track-teal-900">
         {sideDashboard}
       </div>
     </div>

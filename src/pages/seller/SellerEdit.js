@@ -73,7 +73,7 @@ const SellerEdit = () => {
     } else {
       fetchSellerData(sellerId);
     }
-  }, []);
+  }, [navigate]);
 
   const fetchSellerData = async (sellerId) => {
     try {

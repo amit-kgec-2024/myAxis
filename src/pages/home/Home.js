@@ -1,138 +1,75 @@
-import React, { useState } from "react";
-import AdminLogin from "../../component/login/AdminLogin";
-import DeliveryLogin from "../../component/login/DeliveryLogin";
-import HelpLogin from "../../component/login/HelpLogin";
-import VendorLogin from "../../component/login/VendorLogin";
-import SellerLogin from "../../component/login/SellerLogin";
-import ForgetPassword from "../../component/ForgetPassword";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
-const defaultImage = "logo192.png";
 const Home = () => {
-  const [isToggle, setIsToggle] = useState();
-  const handelToggle = (toggleComponent) => {
-    setIsToggle(toggleComponent);
-  };
+  const navigate = useNavigate();
   return (
-    <div className="p-5 bg-teal-200 h-screen">
-      <div className="bg-white h-full p-6">
-        <div
-          className={`flex flex-row items-start gap-6 ${
-            isToggle === "admin" ||
-            isToggle === "helpdesk" ||
-            isToggle === "delivery"
-              ? "hidden"
-              : "block"
-          }`}
-        >
-          <button
-            onClick={() => handelToggle("adminLogin")}
-            className="flex flex-row justify-start items-center p-2 gap-2 shadow-md w-[20%] rounded-sm bg-slate-100"
-          >
-            <div
-              className="w-[4rem] h-[4rem]"
-              style={{
-                backgroundImage: `url(${defaultImage})`,
-                backgroundPosition: "center",
-                backgroundSize: "cover",
-              }}
-            />
-            <div className="text-start">
-              <h1 className="font-bold uppercase">Admin Login</h1>
-              <h1 className="text-xs">Click here to Login Portal</h1>
-            </div>
-          </button>
-          <button
-            onClick={() => handelToggle("vendor")}
-            className="flex flex-row justify-start items-center p-2 gap-2 shadow-md w-[20%] rounded-sm bg-slate-100"
-          >
-            <div
-              className="w-[4rem] h-[4rem]"
-              style={{
-                backgroundImage: `url(${defaultImage})`,
-                backgroundPosition: "center",
-                backgroundSize: "cover",
-              }}
-            />
-            <div className="text-start">
-              <h1 className="font-bold uppercase">Vendors</h1>
-              <h1 className="text-xs">Click here to Login Portal</h1>
-            </div>
-          </button>
-          <button
-            onClick={() => handelToggle("seller")}
-            className="flex flex-row justify-start items-center p-2 gap-2 shadow-md w-[20%] rounded-sm bg-slate-100"
-          >
-            <div
-              className="w-[4rem] h-[4rem]"
-              style={{
-                backgroundImage: `url(${defaultImage})`,
-                backgroundPosition: "center",
-                backgroundSize: "cover",
-              }}
-            />
-            <div className="text-start">
-              <h1 className="font-bold uppercase">Sellers</h1>
-              <h1 className="text-xs">Click here to Login Portal</h1>
-            </div>
-          </button>
-          <button
-            onClick={() => handelToggle("deliveryLogin")}
-            className="flex flex-row justify-start items-center p-2 gap-2 shadow-md w-[20%] rounded-sm bg-slate-100"
-          >
-            <div
-              className="w-[4rem] h-[4rem]"
-              style={{
-                backgroundImage: `url(${defaultImage})`,
-                backgroundPosition: "center",
-                backgroundSize: "cover",
-              }}
-            />
-            <div className="text-start">
-              <h1 className="font-bold uppercase">Delivery Partner</h1>
-              <h1 className="text-xs">Click here to Login Portal</h1>
-            </div>
-          </button>
-          <button
-            onClick={() => handelToggle("helpLogin")}
-            className="flex flex-row justify-start items-center p-2 gap-2 shadow-md w-[20%] rounded-sm bg-slate-100"
-          >
-            <div
-              className="w-[4rem] h-[4rem]"
-              style={{
-                backgroundImage: `url(${defaultImage})`,
-                backgroundPosition: "center",
-                backgroundSize: "cover",
-              }}
-            />
-            <div className="text-start">
-              <h1 className="font-bold uppercase">Help desk</h1>
-              <h1 className="text-xs">Click here to Login Portal</h1>
-            </div>
-          </button>
-        </div>
-        {(isToggle === "admin" ||
-          isToggle === "seller" ||
-          isToggle === "vendor" ||
-          isToggle === "helpdesk" ||
-          isToggle === "delivery") && (
-          <ForgetPassword setIsToggle={setIsToggle} isToggle={isToggle} />
-        )}
+    <div className="bg-white">
+      <div className="flex flex-row items-start justify-around bg-slate-100 py-2 border-b-4 border-b-teal-700 border-t-4 border-t-teal-500">
+        <img src="../logofull.png" alt="Bird" className="w-[10rem]" />
+        <p className="bg-blue-500 px-3 py-1 rounded-sm text-white">
+          IndMart Main Website
+        </p>
       </div>
-      {isToggle === "adminLogin" && (
-        <AdminLogin handelToggle={handelToggle} setIsToggle={setIsToggle} />
-      )}
-      {isToggle === "deliveryLogin" && (
-        <DeliveryLogin handelToggle={handelToggle} setIsToggle={setIsToggle} />
-      )}
-      {isToggle === "helpLogin" && (
-        <HelpLogin handelToggle={handelToggle} setIsToggle={setIsToggle} />
-      )}
-      {isToggle === "seller" && (
-        <SellerLogin handelToggle={handelToggle} setIsToggle={setIsToggle} />
-      )}
-      {isToggle === "vendor" && (
-        <VendorLogin handelToggle={handelToggle} setIsToggle={setIsToggle} />
-      )}
+      <div className="">
+        <img src="../download.jpeg" alt="Bird" className="w-full h-56" />
+      </div>
+      <div className="flex flex-row items-center justify-around gap-6 p-4">
+        <div
+          style={{
+            backgroundImage: "url(../876iygjhgmb.png)",
+            backgroundSize: "cover",
+            backgroundPosition: "start",
+          }}
+          className="flex flex-col justify-start items-start text-teal-800 p-2 gap-3 border-b-4 border-b-rose-600 border-t-4 border-t-amber-600 w-full"
+        >
+          <h1 className="text-lg md:text-2xl font-bold uppercase">
+            Member's Area
+          </h1>
+          <li
+            onClick={() => navigate("/members")}
+            className="text-xs sm:text-base cursor-pointer"
+          >
+            Click to Visit
+          </li>
+        </div>
+        <div
+          style={{
+            backgroundImage: "url(../876iygjhgmb.png)",
+            backgroundSize: "cover",
+            backgroundPosition: "start",
+          }}
+          className="flex flex-col justify-start items-start text-teal-800 p-2 gap-3 border-b-4 border-b-rose-600 border-t-4 border-t-amber-600 w-full"
+        >
+          <h1 className="text-lg md:text-2xl font-bold uppercase">
+            ADMINISTRATOR Area
+          </h1>
+          <li
+            onClick={() => navigate("/administrator")}
+            className="text-xs sm:text-base cursor-pointer"
+          >
+            Click to Visit
+          </li>
+        </div>
+        <div
+          style={{
+            backgroundImage: "url(../876iygjhgmb.png)",
+            backgroundSize: "cover",
+            backgroundPosition: "start",
+          }}
+          className="flex flex-col justify-start items-start text-teal-800 p-2 gap-3 border-b-4 border-b-rose-600 border-t-4 border-t-amber-600 w-full"
+        >
+          <h1 className="text-lg md:text-2xl font-bold uppercase">
+            Application
+          </h1>
+          <li
+            onClick={() => navigate("/applications")}
+            className="text-xs sm:text-base cursor-pointer"
+          >
+            Click to Visit
+          </li>
+        </div>
+      </div>
     </div>
   );
 };

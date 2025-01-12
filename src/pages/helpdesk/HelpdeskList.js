@@ -10,9 +10,9 @@ import { MdEditSquare } from "react-icons/md";
 import { IoEyeSharp } from "react-icons/io5";
 
 const tableHeader = [
-  { title: "seller Name" },
+  { title: "Helpdesk Name" },
   { title: "Phone Number" },
-  { title: "Display Name" },
+  { title: "Email" },
   { title: "Status" },
   { title: "Action" },
 ];
@@ -28,7 +28,7 @@ const HelpdeskList = () => {
   const dataListGet = async (page = 1) => {
     try {
       const response = await fetch(
-        environment.apiUrl + `vendor/list?page=${page}`
+        environment.apiUrl + `helpdesk/list?page=${page}`
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -51,8 +51,10 @@ const HelpdeskList = () => {
   return (
     <Layout>
       <Container className="flex flex-row items-center justify-between">
-        <H1>Vendors List</H1>
-        <AddButton onClick={() => router("/vendor-add")}>Add Vendors</AddButton>
+        <H1>Help Desk List</H1>
+        <AddButton onClick={() => router("/helpdesk-add")}>
+          Add Help Desk
+        </AddButton>
       </Container>
       <Container>
         <div>
@@ -97,7 +99,7 @@ const HelpdeskList = () => {
                     <span>{item.fullName}</span>
                   </td>
                   <td className="p-3">{item.phoneNo}</td>
-                  <td className="p-3">{item.displayName}</td>
+                  <td className="p-3">{item.email}</td>
                   <td className="p-3">
                     {item.isActive === true ? (
                       <p className="w-6 h-6 rounded-full bg-green-600"></p>
@@ -109,16 +111,16 @@ const HelpdeskList = () => {
                     <span className="flex flex-row justify-center gap-4">
                       <button
                         onClick={() => {
-                          sessionStorage.setItem("vendorId", item.id);
-                          router("/vendor-edit");
+                          sessionStorage.setItem("helpdeskId", item.id);
+                          router("/helpdesk-edit");
                         }}
                       >
                         <MdEditSquare className="text-2xl" />
                       </button>
                       <button
                         onClick={() => {
-                          sessionStorage.setItem("vendorId", item.id);
-                          router("/vendor-view");
+                          sessionStorage.setItem("helpdeskId", item.id);
+                          router("/helpdesk-view");
                         }}
                       >
                         <IoEyeSharp className="text-2xl" />
@@ -129,6 +131,7 @@ const HelpdeskList = () => {
               ))}
             </tbody>
           </table>
+
           {isPagination.totalPages === 0 ? (
             <></>
           ) : (

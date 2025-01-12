@@ -1,5 +1,9 @@
 import { Route, Routes as Router } from "react-router-dom";
 import Home from "../pages/home/Home";
+import Members from "../pages/members/Members";
+import Applications from "../pages/applications/Applications";
+import Administrator from "../pages/administrator/Administrator";
+import Page404 from "../pages/Page404";
 // Banner
 import BannerHome from "../pages/banner/Home";
 import BannerAppliance from "../pages/banner/Appliance";
@@ -34,11 +38,37 @@ import HelpdeskList from "../pages/helpdesk/HelpdeskList";
 import HelpdeskAdd from "../pages/helpdesk/HelpdeskAdd";
 import HelpdeskView from "../pages/helpdesk/HelpdeskView";
 import HelpdeskEdit from "../pages/helpdesk/HelpdeskEdit";
+import BannerList from "../pages/banner/BannerList";
+// Parent Category
+import ParentcategoryList from "../pages/parentcatecory/ParentcategoryList";
+import ParentcategoryAdd from "../pages/parentcatecory/ParentcategoryAdd";
+import ParentcategoryEdit from "../pages/parentcatecory/ParentcategoryEdit";
+// Category
+import CategoryList from "../pages/category/CategoryList";
+import CategoryEdit from "../pages/category/CategoryEdit";
+import CategoryAdd from "../pages/category/CategoryAdd";
+// Brands
+import BrandAdd from "../pages/brands/BrandAdd";
+import BrandEdit from "../pages/brands/BrandEdit";
+import BrandList from "../pages/brands/BrandList";
+// Products
+import ProductList from "../pages/products/ProductList";
+import ProductAdd from "../pages/products/ProductAdd";
+import ProductEdit from "../pages/products/ProductEdit";
+import ProductView from "../pages/products/ProductView";
+// Varients
+import VarientList from "../pages/varients/VarientList";
+import VarientAdd from "../pages/varients/VarientAdd";
+import VarientEdit from "../pages/varients/VarientEdit";
 
 const Routes = () => {
   return (
     <Router>
       <Route path="/" element={<Home />} />
+      <Route path="/members" element={<Members />} />
+      <Route path="/applications" element={<Applications />} />
+      <Route path="/administrator" element={<Administrator />} />
+      <Route path="*" element={<Page404 />} />
       {/* Admin */}
       <Route path="/dashboard" element={<AdminDashboard />} />
       {/* Sellers */}
@@ -66,6 +96,7 @@ const Routes = () => {
       <Route path="/helpdesk-view" element={<HelpdeskView />} />
       <Route path="/helpdesk-edit" element={<HelpdeskEdit />} />
       {/* Banner */}
+      <Route path="/banner" element={<BannerList />} />
       <Route path="/banner/home" element={<BannerHome />} />
       <Route path="/banner/appliance" element={<BannerAppliance />} />
       <Route path="/banner/beauty" element={<BannerBeauty />} />
@@ -75,6 +106,27 @@ const Routes = () => {
       <Route path="/banner/grocery" element={<BannerGrocery />} />
       <Route path="/banner/kitchen" element={<BannerKitchen />} />
       <Route path="/banner/mobile" element={<BannerMobile />} />
+      {/* Parant category */}
+      <Route path="/parentcategory-add" element={<ParentcategoryAdd />} />
+      <Route path="/parentcategory-edit" element={<ParentcategoryEdit />} />
+      <Route path="/parentcategory-list" element={<ParentcategoryList />} />
+      {/* Category */}
+      <Route path="/category-add" element={<CategoryAdd />} />
+      <Route path="/category-edit" element={<CategoryEdit />} />
+      <Route path="/category-list" element={<CategoryList />} />
+      {/* Brands */}
+      <Route path="/brand-list" element={<BrandList />} />
+      <Route path="/brand-add" element={<BrandAdd />} />
+      <Route path="/brand-edit" element={<BrandEdit />} />
+      {/* Products */}
+      <Route path="/product-add" element={<ProductAdd />} />
+      <Route path="/product-edit" element={<ProductEdit />} />
+      <Route path="/product-list" element={<ProductList />} />
+      <Route path="/product-view" element={<ProductView />} />
+      {/* Varients */}
+      <Route path="/varient-add" element={<VarientAdd />} />
+      <Route path="/varient-edit" element={<VarientEdit />} />
+      <Route path="/varient-list" element={<VarientList />} />
     </Router>
   );
 };

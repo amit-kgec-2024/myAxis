@@ -12,7 +12,7 @@ const Home = () => {
     setIsToggle(toggleComponent);
   };
   return (
-    <div className="p-5 bg-teal-200 h-screen">
+    <div className="p-0 bg-teal-200 h-screen">
       <div className="bg-white h-full p-6">
         <div
           className={`flex flex-row items-start gap-6 ${

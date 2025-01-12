@@ -10,7 +10,7 @@ import { MdEditSquare } from "react-icons/md";
 import { IoEyeSharp } from "react-icons/io5";
 
 const tableHeader = [
-  { title: "seller Name" },
+  { title: "Seller Name" },
   { title: "Phone Number" },
   { title: "Display Name" },
   { title: "Status" },

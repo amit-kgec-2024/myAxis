@@ -305,7 +305,7 @@ const DeliveryAdd = () => {
             </div>
             <div className="w-full md:w-[45%]">
               <H3>
-                Shippng Address{" "}
+                Present Address{" "}
                 <span className="px-4">
                   <input
                     type="checkbox"

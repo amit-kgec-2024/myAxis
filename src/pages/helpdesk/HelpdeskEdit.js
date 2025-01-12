@@ -9,48 +9,44 @@ import H3 from "../../component/tag/H3";
 import StateDropdown from "../../component/tag/StateDropdown";
 import H2 from "../../component/tag/H2";
 import Dropdown from "../../component/tag/Dropdown";
-import { gstTypeData, salutionData } from "../../utils/dropdown";
-import GstDropdown from "../../component/tag/GstDropdown";
-import { FaTrash } from "react-icons/fa";
-import AddButton from "../../component/button/AddButton";
+import { salutionData } from "../../utils/dropdown";
 import { toast } from "react-toastify";
 
 const HelpdeskEdit = () => {
   const navigate = useNavigate();
-  const [vendorId, setVendorId] = useState("");
-  const [vendorData, setVendorData] = useState(null);
+  const [helpdeskId, setHelpdeskId] = useState("");
+  const [helpdeskData, setHelpdeskData] = useState(null);
   const [isImage, setImages] = useState("");
   const [password, setPassword] = useState("");
   const [selected, setSelected] = useState("");
   const [fullName, setFullName] = useState("");
-  const [companyName, setCompanyName] = useState("");
-  const [displayName, setDisplayName] = useState("");
   const [email, setEmail] = useState("");
   const [mobile, setMobile] = useState("");
-  const [billingAddress1, setBillingAddress1] = useState("");
-  const [billingAddress2, setBillingAddress2] = useState("");
-  const [billingStateId, setBillingStateId] = useState(null);
-  const [billingCity, setBillingCity] = useState("");
-  const [billingPincode, setBillingPincode] = useState("");
-  const [billingCountry, setBillingCountry] = useState("");
+  const [permanentAddress1, setPermanentAddress1] = useState("");
+  const [permanentAddress2, setPermanentAddress2] = useState("");
+  const [permanentStateId, setPermanentStateId] = useState(null);
+  const [permanentCity, setPermanentCity] = useState("");
+  const [permanentPincode, setPermanentPincode] = useState("");
+  const [permanentCountry, setPermanentCountry] = useState("");
 
-  const [shippingAddress1, setShippingAddress1] = useState("");
-  const [shippingAddress2, setShippingAddress2] = useState("");
-  const [shippingStateId, setShippingStateId] = useState(null);
-  const [shippingCity, setShippingCity] = useState("");
-  const [shippingPincode, setShippingPincode] = useState("");
-  const [shippingCountry, setShippingCountry] = useState("");
+  const [presentAddress1, setPresentAddress1] = useState("");
+  const [presentAddress2, setPresentAddress2] = useState("");
+  const [presentStateId, setPresentStateId] = useState(null);
+  const [presentCity, setPresentCity] = useState("");
+  const [presentPincode, setPresentPincode] = useState("");
+  const [presentCountry, setPresentCountry] = useState("");
 
   const [isState, setIsState] = useState([]);
   const [panNumber, setPanNumber] = useState("");
   const [panImage, setPanImage] = useState("");
-  const [gstType, setGstType] = useState("");
-  const [gstNumber, setGstNumber] = useState("");
-  const [gstImage, setGstImage] = useState("");
-  const [contacts, setContacts] = useState([]);
-  const [bankDetails, setBankDetails] = useState([]);
+  const [aadharNumber, setAadharNumber] = useState("");
+  const [aadharImage, setAadharImage] = useState("");
+  const [accountHolder, setAccountHolderName] = useState("");
+  const [bankName, setBankName] = useState("");
+  const [accountNumber, setAccountNumber] = useState("");
+  const [ifscCode, setIfscCode] = useState("");
 
-  const [sameAsBilling, setSameAsBilling] = useState(false);
+  const [sameAspermanent, setSameAspermanent] = useState(false);
   const fetchState = async () => {
     try {
       const response = await fetch(environment.apiUrl + "state/list");
@@ -63,186 +59,100 @@ const HelpdeskEdit = () => {
       console.log(error);
     }
   };
-  console.log("view------>", vendorData);
+  console.log("view-d----->", helpdeskData);
   useEffect(() => {
     fetchState();
-    const vendorId = sessionStorage.getItem("vendorId");
-    setVendorId(vendorId);
-    if (!vendorId) {
-      navigate("/vendor-list");
+    const helpdeskId = sessionStorage.getItem("helpdeskId");
+    setHelpdeskId(helpdeskId);
+    if (!helpdeskId) {
+      navigate("/helpdesk-list");
     } else {
-      fetchVendorData(vendorId);
+      fetchHelpdeskData(helpdeskId);
     }
-  }, []);
+  }, [navigate]);
 
-  const fetchVendorData = async (vendorId) => {
+  const fetchHelpdeskData = async (helpdeskId) => {
     try {
       const response = await fetch(
-        environment.apiUrl + `vendor/view/${vendorId}`
+        environment.apiUrl + `helpdesk/view/${helpdeskId}`
       );
       if (!response.ok) {
         throw new Error("Failed to fetch vendor data");
       }
       const data = await response.json();
-      setVendorData(data);
+      setHelpdeskData(data);
       setFullName(data.data?.fullName);
       setSelected(data.data?.salution);
-      setCompanyName(data.data?.companyName);
-      setDisplayName(data.data?.displayName);
       setEmail(data.data?.email);
       setMobile(data.data?.phoneNo);
       setPassword(data.data?.passwords);
       setImages(data.data?.profileImage);
-      setBillingAddress1(data.data?.billingAddress1);
-      setBillingAddress2(data.data?.billingAddress2);
-      setBillingCity(data.data?.billingCity);
-      setBillingCountry(data.data?.billingCountry);
-      setBillingPincode(data.data?.billingPincode);
-      setBillingStateId(data.data?.billingStateId);
-      setShippingAddress1(data.data?.shippingAddress1);
-      setShippingAddress2(data.data?.shippingAddress2);
-      setShippingCity(data.data?.shippingCity);
-      setShippingCountry(data.data?.shippingCountry);
-      setShippingPincode(data.data?.shippingPincode);
-      setShippingStateId(data.data?.shippingStateId);
-      setGstImage(data.data?.gstImage);
-      setGstNumber(data.data?.gstNumber);
-      setGstType(data.data?.gstType);
+      setPermanentAddress1(data.data?.permanentAddress1);
+      setPermanentAddress2(data.data?.permanentAddress2);
+      setPermanentCity(data.data?.permanentCity);
+      setPermanentCountry(data.data?.permanentCountry);
+      setPermanentPincode(data.data?.permanentPincode);
+      setPermanentStateId(data.data?.permanentStateId);
+      setPresentAddress1(data.data?.presentAddress1);
+      setPresentAddress2(data.data?.presentAddress2);
+      setPresentCity(data.data?.presentCity);
+      setPresentCountry(data.data?.presentCountry);
+      setPresentPincode(data.data?.presentPincode);
+      setPresentStateId(data.data?.presentStateId);
+      setAadharImage(data.data?.aadharImage);
+      setAadharNumber(data.data?.aadharNumber);
       setPanImage(data.data?.panImage);
       setPanNumber(data.data?.panNumber);
-      setContacts(data.contactDetails);
-      setBankDetails(data.bankDetails);
+      setAccountHolderName(data.bankDetails?.accountHolder);
+      setAccountNumber(data.bankDetails?.accountNumber);
+      setBankName(data.bankDetails?.bankName);
+      setIfscCode(data.bankDetails?.ifscCode);
     } catch (error) {
       console.error("Error fetching vendor data:", error);
     }
   };
   useEffect(() => {
     const isSame =
-      billingAddress1 === shippingAddress1 &&
-      billingAddress2 === shippingAddress2 &&
-      billingCity === shippingCity &&
-      billingCountry === shippingCountry &&
-      billingPincode === shippingPincode &&
-      billingStateId === shippingStateId;
+      permanentAddress1 === presentAddress1 &&
+      permanentAddress2 === presentAddress2 &&
+      permanentCity === presentCity &&
+      permanentCountry === presentCountry &&
+      permanentPincode === presentPincode &&
+      permanentStateId === presentStateId;
 
-    setSameAsBilling(isSame);
+    setSameAspermanent(isSame);
   }, [
-    billingAddress1,
-    billingAddress2,
-    billingCity,
-    billingCountry,
-    billingPincode,
-    billingStateId,
-    shippingAddress1,
-    shippingAddress2,
-    shippingCity,
-    shippingCountry,
-    shippingPincode,
-    shippingStateId,
+    permanentAddress1,
+    permanentAddress2,
+    permanentCity,
+    permanentCountry,
+    permanentPincode,
+    permanentStateId,
+    presentAddress1,
+    presentAddress2,
+    presentCity,
+    presentCountry,
+    presentPincode,
+    presentStateId,
   ]);
 
   const handleCheckboxChange = () => {
-    if (!sameAsBilling) {
-      setShippingAddress1(billingAddress1);
-      setShippingAddress2(billingAddress2);
-      setShippingCity(billingCity);
-      setShippingCountry(billingCountry);
-      setShippingPincode(billingPincode);
-      setShippingStateId(billingStateId);
+    if (!sameAspermanent) {
+      setPresentAddress1(permanentAddress1);
+      setPresentAddress2(permanentAddress2);
+      setPresentCity(permanentCity);
+      setPresentCountry(permanentCountry);
+      setPresentPincode(permanentPincode);
+      setPresentStateId(permanentStateId);
     } else {
-      setShippingAddress1("");
-      setShippingAddress2("");
-      setShippingCity("");
-      setShippingCountry("");
-      setShippingPincode("");
-      setShippingStateId("");
+      setPresentAddress1("");
+      setPresentAddress2("");
+      setPresentCity("");
+      setPresentCountry("");
+      setPresentPincode("");
+      setPresentStateId("");
     }
-    setSameAsBilling(!sameAsBilling);
-  };
-
-  const addContact = () => {
-    setContacts([
-      ...contacts,
-      {
-        salution: "",
-        firstName: "",
-        lastName: "",
-        email: "",
-        mobilNo: "",
-        phoneNo: "",
-      },
-    ]);
-  };
-  const deletContact = async (index, id) => {
-    const isConfirmed = window.confirm(
-      "Are you sure you want to delete this contact?"
-    );
-    if (!isConfirmed) return;
-    try {
-      const response = await fetch(
-        environment.apiUrl + `vendor/delete/contact/${id}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      if (response.ok) {
-        setContacts((prevContacts) =>
-          prevContacts.filter((_, i) => i !== index)
-        );
-        fetchVendorData(vendorId);
-        toast.success("Vendor Contact Details Deleted Successfully");
-      } else {
-        console.error("Failed to delete contact from the server");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const handleChange = (index, field, value) => {
-    const updatedContacts = [...contacts];
-    updatedContacts[index][field] = value;
-    setContacts(updatedContacts);
-  };
-  const addBankDetail = () => {
-    setBankDetails([
-      ...bankDetails,
-      { accountHolderName: "", bankName: "", accountNumber: "", ifscCode: "" },
-    ]);
-  };
-
-  const removeBankDetail = async (index, id) => {
-    const isConfirmed = window.confirm(
-      "Are you sure you want to delete this bankDetails?"
-    );
-    if (!isConfirmed) return;
-    try {
-      const response = await fetch(
-        environment.apiUrl + `vendor/delete/bank/${id}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      if (response.ok) {
-        setBankDetails(bankDetails.filter((_, i) => i !== index));
-        fetchVendorData(vendorId);
-        toast.success("Vendor bank Details Deleted Successfully");
-      } else {
-        console.error("Failed to delete bank from the server");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const handleInputChange = (index, field, value) => {
-    const updatedBankDetails = [...bankDetails];
-    updatedBankDetails[index][field] = value;
-    setBankDetails(updatedBankDetails);
+    setSameAspermanent(!sameAspermanent);
   };
 
   const handelSubmit = async (e) => {
@@ -252,33 +162,32 @@ const HelpdeskEdit = () => {
       phoneNo: mobile,
       salution: selected,
       fullName: fullName,
-      companyName: companyName,
-      displayName: displayName,
       profileImage: isImage,
       password: password,
-      billingAddress1: billingAddress1,
-      billingAddress2: billingAddress2,
-      billingCity: billingCity,
-      billingPincode: billingPincode,
-      billingCountry: billingCountry,
-      billingStateId: billingStateId,
-      shippingAddress1: shippingAddress1,
-      shippingAddress2: shippingAddress2,
-      shippingCity: shippingCity,
-      shippingPincode: shippingPincode,
-      shippingCountry: shippingCountry,
-      shippingStateId: shippingStateId,
+      permanentAddress1: permanentAddress1,
+      permanentAddress2: permanentAddress2,
+      permanentCity: permanentCity,
+      permanentPincode: permanentPincode,
+      permanentCountry: permanentCountry,
+      permanentStateId: permanentStateId,
+      presentAddress1: presentAddress1,
+      presentAddress2: presentAddress2,
+      presentCity: presentCity,
+      presentPincode: presentPincode,
+      presentCountry: presentCountry,
+      presentStateId: presentStateId,
       panImage: panImage,
-      gstType: gstType,
-      gstNumber: gstNumber,
-      gstImage: gstImage,
+      aadharNumber: aadharNumber,
+      aadharImage: aadharImage,
       panNumber: panNumber,
-      contactList: contacts,
-      bankList: bankDetails,
+      accountHolder: accountHolder,
+      bankName: bankName,
+      accountNumber: accountNumber,
+      ifscCode: ifscCode,
     };
     try {
       const response = await fetch(
-        environment.apiUrl + `vendor/update/${vendorId}`,
+        environment.apiUrl + `helpdesk/update/${helpdeskId}`,
         {
           method: "PUT",
           headers: {
@@ -288,8 +197,8 @@ const HelpdeskEdit = () => {
         }
       );
       await response.json();
-      toast.success("Vendor Add SuccesFully");
-      navigate("/vendor-list");
+      toast.success("Helpdesk Edit SuccesFully");
+      navigate("/helpdesk-list");
     } catch (error) {
       console.log(error);
       toast.error("Error Server", error);
@@ -313,28 +222,14 @@ const HelpdeskEdit = () => {
               onChange={setFullName}
             />
             <Input
-              label="Display Name"
-              type="text"
-              placeholder="Displayname"
-              value={displayName}
-              onChange={setDisplayName}
-            />
-            <Input
-              label="Company Name"
-              type="text"
-              placeholder="Companyname"
-              value={companyName}
-              onChange={setCompanyName}
-            />
-            <Input
-              label="Vendor Email"
+              label="Delivery Email"
               type="email"
               placeholder="email"
               value={email}
               onChange={setEmail}
             />
             <Input
-              label="Vendor phone"
+              label="Delivery phone"
               type="text"
               placeholder="phone"
               value={mobile}
@@ -358,137 +253,82 @@ const HelpdeskEdit = () => {
           </div>
           <div className="flex flex-wrap py-4 justify-around gap-5 w-full">
             <div className="w-full md:w-[45%]">
-              <H3>Billing Address</H3>
+              <H3>Permanent Address</H3>
               <Input
-                value={billingAddress1}
-                onChange={setBillingAddress1}
-                placeholder="Billing Address 1"
+                value={permanentAddress1}
+                onChange={setPermanentAddress1}
+                placeholder="permanent Address 1"
               />
               <Input
-                value={billingAddress2}
-                onChange={setBillingAddress2}
-                placeholder="Billing Address 2"
+                value={permanentAddress2}
+                onChange={setPermanentAddress2}
+                placeholder="permanent Address 2"
               />
               <StateDropdown
                 options={isState}
-                defaultValue={billingStateId}
-                onChange={setBillingStateId}
+                defaultValue={permanentStateId}
+                onChange={setPermanentStateId}
               />
               <Input
-                value={billingCity}
-                onChange={setBillingCity}
-                placeholder="Billing City"
+                value={permanentCity}
+                onChange={setPermanentCity}
+                placeholder="permanent City"
               />
               <Input
-                value={billingPincode}
-                onChange={setBillingPincode}
-                placeholder="Billing Pincode"
+                value={permanentPincode}
+                onChange={setPermanentPincode}
+                placeholder="permanent Pincode"
               />
               <Input
-                value={billingCountry}
-                onChange={setBillingCountry}
-                placeholder="Billing Country"
+                value={permanentCountry}
+                onChange={setPermanentCountry}
+                placeholder="permanent Country"
               />
             </div>
             <div className="w-full md:w-[45%]">
               <H3>
-                Shippng Address{" "}
+                Present Address{" "}
                 <span className="px-4">
                   <input
                     type="checkbox"
-                    checked={sameAsBilling}
+                    checked={sameAspermanent}
                     onChange={handleCheckboxChange}
                     className="w-4 h-4"
                   />
                 </span>
-                <span>Same as Billing Address</span>
+                <span>Same as Permanent Address</span>
               </H3>
               <Input
-                value={shippingAddress1}
-                onChange={setShippingAddress1}
-                placeholder="Shipping Address 1"
+                value={presentAddress1}
+                onChange={setPresentAddress1}
+                placeholder="Present Address 1"
               />
               <Input
-                value={shippingAddress2}
-                onChange={setShippingAddress2}
-                placeholder="Shipping Address 2"
+                value={presentAddress2}
+                onChange={setPresentAddress2}
+                placeholder="Present Address 2"
               />
               <StateDropdown
                 options={isState}
-                defaultValue={shippingStateId}
-                onChange={setShippingStateId}
+                defaultValue={presentStateId}
+                onChange={setPresentStateId}
               />
               <Input
-                value={shippingCity}
-                onChange={setShippingCity}
-                placeholder="Shipping City"
+                value={presentCity}
+                onChange={setPresentCity}
+                placeholder="Present City"
               />
               <Input
-                value={shippingPincode}
-                onChange={setShippingPincode}
-                placeholder="Shipping Pincode"
+                value={presentPincode}
+                onChange={setPresentPincode}
+                placeholder="Present Pincode"
               />
               <Input
-                value={shippingCountry}
-                onChange={setShippingCountry}
-                placeholder="Shipping Country"
+                value={presentCountry}
+                onChange={setPresentCountry}
+                placeholder="Present Country"
               />
             </div>
-          </div>
-        </div>
-        <div className="w-full py-2">
-          <div className="bg-teal-100 py-4 px-2">
-            <H2>Contact Details</H2>
-          </div>
-          <div className="">
-            {contacts.map((contact, index) => (
-              <div className="flex flex-row gap-2 py-4" key={index}>
-                <Dropdown
-                  options={salutionData}
-                  onChange={(value) => handleChange(index, "salution", value)}
-                  defaultValue={contact.salution}
-                />
-                <Input
-                  label="First Name"
-                  type="text"
-                  placeholder="First Name"
-                  value={contact.firstName}
-                  onChange={(value) => handleChange(index, "firstName", value)}
-                />
-                <Input
-                  label="Last Name"
-                  type="text"
-                  placeholder="Last Name"
-                  value={contact.lastName}
-                  onChange={(value) => handleChange(index, "lastName", value)}
-                />
-                <Input
-                  label="Email"
-                  type="email"
-                  placeholder="Email"
-                  value={contact.email}
-                  onChange={(value) => handleChange(index, "email", value)}
-                />
-                <Input
-                  label="Mobile no"
-                  type="tel"
-                  placeholder="Mobile no"
-                  value={contact.mobilNo}
-                  onChange={(value) => handleChange(index, "mobilNo", value)}
-                />
-                <Input
-                  label="Phone no"
-                  type="tel"
-                  placeholder="Phone no"
-                  value={contact.phoneNo}
-                  onChange={(value) => handleChange(index, "phoneNo", value)}
-                />
-                <button onClick={() => deletContact(index, contact._id)}>
-                  <FaTrash />
-                </button>
-              </div>
-            ))}
-            <AddButton onClick={addContact}>Add More</AddButton>
           </div>
         </div>
         <div className="w-full py-2">
@@ -496,50 +336,36 @@ const HelpdeskEdit = () => {
             <H2>Bank Details</H2>
           </div>
           <div className="">
-            {bankDetails.map((detail, index) => (
-              <div key={index} className="flex flex-row gap-2 py-4">
-                <Input
-                  label="Account Holder Name"
-                  type="text"
-                  placeholder="Account Holder Name"
-                  value={detail.accountHolderName}
-                  onChange={(value) =>
-                    handleInputChange(index, "accountHolderName", value)
-                  }
-                />
-                <Input
-                  label="Bank Name"
-                  type="text"
-                  placeholder="Bank Name"
-                  value={detail.bankName}
-                  onChange={(value) =>
-                    handleInputChange(index, "bankName", value)
-                  }
-                />
-                <Input
-                  label="Account Number"
-                  type="text"
-                  placeholder="Account Number"
-                  value={detail.accountNumber}
-                  onChange={(value) =>
-                    handleInputChange(index, "accountNumber", value)
-                  }
-                />
-                <Input
-                  label="IFSC Code"
-                  type="text"
-                  placeholder="IFSC Code"
-                  value={detail.ifscCode}
-                  onChange={(value) =>
-                    handleInputChange(index, "ifscCode", value)
-                  }
-                />
-                <button onClick={() => removeBankDetail(index, detail._id)}>
-                  <FaTrash />
-                </button>
-              </div>
-            ))}
-            <AddButton onClick={addBankDetail}>Add More</AddButton>
+            <div className="flex flex-row gap-2 py-4">
+              <Input
+                label="Account Holder Name"
+                type="text"
+                placeholder="Account Holder Name"
+                value={accountHolder}
+                onChange={setAccountHolderName}
+              />
+              <Input
+                label="Bank Name"
+                type="text"
+                placeholder="Bank Name"
+                value={bankName}
+                onChange={setBankName}
+              />
+              <Input
+                label="Account Number"
+                type="text"
+                placeholder="Account Number"
+                value={accountNumber}
+                onChange={setAccountNumber}
+              />
+              <Input
+                label="IFSC Code"
+                type="text"
+                placeholder="IFSC Code"
+                value={ifscCode}
+                onChange={setIfscCode}
+              />
+            </div>
           </div>
         </div>
         <div className="w-full py-2">
@@ -561,20 +387,15 @@ const HelpdeskEdit = () => {
           <div className="">
             <div className="flex flex-row gap-2 py-4 justify-between">
               <div className="flex flex-wrap gap-4">
-                <GstDropdown
-                  options={gstTypeData}
-                  defaultValue={gstType}
-                  onChange={setGstType}
-                />
                 <Input
-                  label="Gst Number"
+                  label="Aadhar Number"
                   type="text"
-                  placeholder="Gst Number"
-                  value={gstNumber}
-                  onChange={setGstNumber}
+                  placeholder="Aadhar Number"
+                  value={aadharNumber}
+                  onChange={setAadharNumber}
                 />
               </div>
-              <ImageUploads value={gstImage} onChange={setGstImage} />
+              <ImageUploads value={aadharImage} onChange={setAadharImage} />
             </div>
           </div>
         </div>

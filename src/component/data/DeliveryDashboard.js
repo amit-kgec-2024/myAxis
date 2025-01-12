@@ -1,24 +1,23 @@
+import { FaUserAlt } from "react-icons/fa";
+
 export const delivery = [
   { type: "label", label: "Delivery Partners" },
-  { name: "Dashboard", path: "/delivery-dashboard" },
+  { name: "Dashboard", icon: <FaUserAlt />, path: "/delivery-dashboard" },
   {
-    name: "Enquiry",
-    path: "/enquiry",
+    name: "Profile",
+    icon: <FaUserAlt />,
+    path: "/delivery-view",
   },
   {
-    name: "Financial Consultant",
-    // icon: duotone.UserProfile,
-    path: "/financialConsultant",
-  },
-  {
-    name: "Lending Partners",
-    // icon: duotone.UserProfile,
+    name: "Customers",
+    icon: <FaUserAlt />,
+    path: "#",
     children: [
       {
         name: "Partner Category",
-        path: "/partners/partnerCategory/categoryList",
+        path: "#",
       },
-      { name: "Partner", path: "/partners/partner/partnerList" },
+      { name: "Partner", path: "#" },
     ],
   },
 ];

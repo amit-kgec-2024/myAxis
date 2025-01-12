@@ -28,10 +28,10 @@ const SellerLogin = ({ setIsToggle, handelToggle }) => {
 
       if (response.ok) {
         toast.success("Login successful!");
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("userType", data.user.userType);
-        localStorage.setItem("details", data.user);
-        sessionStorage.setItem("sellerId", data.user?.sellerId);
+        localStorage.setItem("token", data?.token);
+        localStorage.setItem("userType", data?.user?.userType);
+        localStorage.setItem("details", data?.user);
+        sessionStorage.setItem("sellerId", data?.user?.sellerId);
         navigate("/seller-dashboard");
       } else {
         toast.error(data.message || "Login failed");
